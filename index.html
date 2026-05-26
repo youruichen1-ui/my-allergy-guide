@@ -1,81 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>過敏小百科 | 全方位抗敏生活指南</title>
-
-    <meta
-        name="description"
-        content="提供過敏性鼻炎、塵蟎防護、空氣品質與抗敏生活的完整照護資訊。"
-    />
-
-    <meta
-        name="keywords"
-        content="過敏, 鼻炎, 塵蟎, AQI, 空氣品質"
-    />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舒鼻指南 | 您的全方位過敏照護站</title>
     <style>
+        /* 全域極簡風格設計 */
         :root {
-            --primary: #3a5a40;
-            --primary-light: #edf2ee;
-            --secondary: #4a5759;
-            --bg-light: #fdfdfd;
+            --primary: #3a5a40; /* 深森林綠 */
+            --primary-light: #edf2ee; /* 淺綠背景 */
+            --secondary: #4a5759; /* 霧霾藍灰 */
+            --bg-light: #fdfdfd; /* 純淨極簡白 */
             --card-bg: #ffffff;
-            --text-dark: #2c3531;
+            --text-dark: #2c3531; /* 柔和深黑 */
             --text-muted: #6c757d;
             --accent-green: #2a9d8f;
             --accent-red: #e63946;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 100px;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family:
-                "PingFang TC",
-                "Noto Sans TC",
-                "Microsoft JhengHei",
-                sans-serif;
-
+            font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
             background-color: #fafafa;
             color: var(--text-dark);
             line-height: 1.8;
         }
 
+        /* 頂部固定導覽列 */
         header {
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
-            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.02);
-
+            box-shadow: 0 1px 10px rgba(0,0,0,0.02);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-
             border-bottom: 1px solid #f0f0f0;
         }
-
         .nav-container {
             max-width: 1100px;
             margin: 0 auto;
-
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             padding: 15px 20px;
         }
-
         .logo {
             font-size: 1.25rem;
             font-weight: 700;
@@ -83,13 +52,7 @@
             text-decoration: none;
             letter-spacing: 1px;
         }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-        }
-
+        nav ul { display: flex; list-style: none; gap: 24px; }
         nav a {
             text-decoration: none;
             color: var(--text-dark);
@@ -98,694 +61,513 @@
             transition: color 0.2s;
             cursor: pointer;
         }
+        nav a:hover { color: var(--primary); }
 
-        nav a:hover {
-            color: var(--primary);
-        }
-
+        /* 首頁大圖視覺區 */
         .hero {
             text-align: center;
             padding: 120px 20px 40px;
-            background:
-                linear-gradient(
-                    180deg,
-                    #f4f6f4 0%,
-                    #fafafa 100%
-                );
+            background: linear-gradient(180deg, #f4f6f4 0%, #fafafa 100%);
         }
+        .hero h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; font-weight: 700; }
+        .hero p { color: var(--secondary); font-size: 1.05rem; max-width: 650px; margin: 0 auto; }
 
-        .hero h1 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
+        /* API 空氣品質串接看板 */
+        .aqi-section { max-width: 920px; margin: 0 auto 30px; padding: 0 20px; }
+        .aqi-card { background: var(--card-bg); border: 1px solid #eef2f3; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); text-align: center; }
+        .aqi-header { font-size: 1.15rem; font-weight: 600; color: var(--primary); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .aqi-select-box { margin-bottom: 20px; }
+        .aqi-select { padding: 8px 16px; font-size: 0.95rem; border-radius: 6px; border: 1px solid #ddd; color: var(--text-dark); background: #fff; cursor: pointer; }
+        .aqi-display { display: inline-flex; align-items: center; justify-content: center; gap: 30px; background: #fafafa; padding: 20px 40px; border-radius: 12px; margin-top: 10px; }
+        .aqi-num-box { text-align: center; }
+        .aqi-value { font-size: 3rem; font-weight: 800; line-height: 1; color: #2a9d8f; }
+        .aqi-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
+        .aqi-status-box { text-align: left; }
+        .aqi-status { font-size: 1.4rem; font-weight: 700; color: #2a9d8f; margin-bottom: 4px; }
+        .aqi-station { font-size: 0.9rem; color: var(--text-dark); }
+        .aqi-time { font-size: 0.8rem; color: var(--text-muted); }
 
-        .hero p {
-            color: var(--secondary);
-            font-size: 1.05rem;
-            max-width: 650px;
-            margin: 0 auto;
-        }
+        /* 主內容容器 */
+        main { max-width: 960px; margin: 0 auto 80px; padding: 0 20px; }
+        section { background: var(--card-bg); padding: 45px; border-radius: 16px; margin-bottom: 40px; border: 1px solid #f0f0f0; box-shadow: 0 4px 30px rgba(0,0,0,0.01); }
+        h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        h2::after { content: ''; flex: 1; height: 1px; background: #eaeaea; margin-left: 15px; }
 
-        .aqi-section {
-            max-width: 920px;
-            margin: 0 auto 30px;
-            padding: 0 20px;
-        }
+        /* 百科與指南樣式 */
+        .intro-text { color: var(--secondary); margin-bottom: 20px; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; }
+        .comparison-table th, .comparison-table td { border: 1px solid #eaeaea; padding: 16px; text-align: left; vertical-align: top; }
+        .comparison-table th { background-color: var(--primary-light); color: var(--primary); font-weight: 600; width: 20%; }
+        .comparison-table td { width: 40%; }
+        .highlight-list { padding-left: 18px; }
+        .highlight-list li { margin-bottom: 6px; }
 
-        .aqi-card {
-            background: var(--card-bg);
-            border: 1px solid #eef2f3;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.01);
-            text-align: center;
-        }
+        .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .guide-box { background: #fafbfb; border: 1px solid #eee; padding: 25px; border-radius: 12px; }
+        .guide-box h4 { color: var(--secondary); margin-bottom: 12px; font-size: 1.05rem; }
+        .guide-box ul { padding-left: 20px; color: #495057; font-size: 0.95rem; }
+        .guide-box li { margin-bottom: 8px; }
 
-        .aqi-header {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 20px;
+        /* 食物色彩標籤 */
+        .food-container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
+        .food-card { padding: 30px; border-radius: 12px; }
+        .food-card h4 { font-size: 1.1rem; margin-bottom: 15px; }
+        .good-card { background-color: #f2f9f5; border: 1px solid #d8ebd9; }
+        .good-card h4 { color: var(--accent-green); }
+        .bad-card { background-color: #fff5f5; border: 1px solid #fcdede; }
+        .bad-card h4 { color: var(--accent-red); }
+        .tag-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .tag { padding: 5px 12px; background: #fff; border-radius: 6px; font-size: 0.9rem; border: 1px solid rgba(0,0,0,0.04); color: var(--text-dark); }
+        .food-note { font-size: 0.88rem; color: var(--secondary); border-top: 1px dashed rgba(0,0,0,0.08); padding-top: 12px; }
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
+        /* 外部資源 */
+        .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .link-card { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background-color: #fff; color: var(--text-dark); text-decoration: none; border-radius: 10px; border: 1px solid #eaeaea; transition: all 0.2s; font-size: 0.95rem; }
+        .link-card:hover { border-color: var(--primary); background-color: var(--primary-light); color: var(--primary); }
 
-        .aqi-select-box {
-            margin-bottom: 20px;
-        }
+        /* 互動問卷樣式（10題優化版） */
+        .quiz-progress-bar { height: 6px; width: 100%; background-color: #eee; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
+        .quiz-progress-fill { height: 100%; width: 10%; background-color: var(--primary); transition: width 0.3s ease; }
+        .quiz-counter { font-size: 0.85rem; color: var(--text-muted); text-align: right; margin-bottom: 10px; }
+        .question { display: none; }
+        .question.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        .q-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
+        .quiz-btn { display: block; width: 100%; padding: 14px 20px; margin: 12px 0; background-color: #fff; border: 1px solid #eaeaea; border-radius: 8px; text-align: left; font-size: 0.98rem; cursor: pointer; color: var(--text-dark); transition: all 0.2s; }
+        .quiz-btn:hover { background-color: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        #quiz-result { display: none; text-align: center; padding: 20px 0; }
+        .result-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; }
+        .res-allergy { color: var(--primary); }
+        .res-cold { color: var(--secondary); }
+        .restart-btn { background-color: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; margin-top: 20px; }
+        .quiz-disclaimer { font-size: 0.85rem; color: var(--text-muted); margin-top: 30px; border-top: 1px dashed #eee; padding-top: 15px; }
 
-        .aqi-select {
-            padding: 8px 16px;
-            font-size: 0.95rem;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            color: var(--text-dark);
-            background: #fff;
-            cursor: pointer;
-        }
-
-        .aqi-display {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-
-            background: #fafafa;
-            padding: 20px 40px;
-            border-radius: 12px;
-            margin-top: 10px;
-        }
-
-        .aqi-num-box {
-            text-align: center;
-        }
-
-        .aqi-value {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #2a9d8f;
-        }
-
-        .aqi-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        .aqi-status-box {
-            text-align: left;
-        }
-
-        .aqi-status {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2a9d8f;
-            margin-bottom: 4px;
-        }
-
-        .aqi-station {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        .aqi-time {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .risk-card {
-            margin-top: 20px;
-            padding: 18px;
-            border-radius: 12px;
-            background: #f7faf8;
-            border: 1px solid #e5ece7;
-            text-align: left;
-        }
-
-        .risk-title {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        #risk-content {
-            color: var(--secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        main {
-            max-width: 960px;
-            margin: 0 auto 80px;
-            padding: 0 20px;
-        }
-
-        section {
-            background: var(--card-bg);
-            padding: 45px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            border: 1px solid #f0f0f0;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.01);
-        }
-
-        h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h2::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #eaeaea;
-            margin-left: 15px;
-        }
-
-        .intro-text {
-            color: var(--secondary);
-            margin-bottom: 20px;
-        }
-
-        footer {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            padding: 40px 0;
-            background: #fff;
-            border-top: 1px solid #eee;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 40px 0; background: #fff; border-top: 1px solid #eee; }
 
         @media (max-width: 800px) {
-
-            nav ul {
-                display: none;
-            }
-
-            section {
-                padding: 25px 20px;
-            }
-
-            .aqi-display {
-                padding: 20px;
-                gap: 15px;
-                width: 100%;
-                flex-direction: column;
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-
-            body {
-                background: #111;
-                color: #eee;
-            }
-
-            section,
-            .aqi-card,
-            footer {
-                background: #1b1b1b;
-                border-color: #333;
-            }
-
-            .aqi-display {
-                background: #222;
-            }
-
-            .risk-card {
-                background: #1d2421;
-                border-color: #2f3b35;
-            }
-
-            nav a,
-            .hero p,
-            .intro-text,
-            .aqi-station,
-            .aqi-time,
-            #risk-content {
-                color: #ccc;
-            }
+            nav ul { display: none; }
+            section { padding: 25px 20px; }
+            .sub-grid, .food-container, .resource-grid { grid-template-columns: 1fr; }
+            .comparison-table { display: block; overflow-x: auto; font-size: 0.9rem; }
+            .aqi-display { padding: 20px; gap: 15px; width: 100%; }
         }
     </style>
 </head>
-
 <body>
 
-<header>
-    <div class="nav-container">
-
-        <a href="#" class="logo">
-            🍃 過敏小百科
-        </a>
-
-        <nav>
-            <ul>
-                <li><a onclick="scrollToSection('當前空污')">即時空污</a></li>
-                <li><a onclick="scrollToSection('百科')">過敏百科</a></li>
-                <li><a onclick="scrollToSection('指南')">抗敏指南</a></li>
-            </ul>
-        </nav>
-
-    </div>
-</header>
-
-<div class="hero">
-
-    <h1>過敏小百科</h1>
-
-    <p>
-        提供過敏性鼻炎、塵蟎防護、空氣品質與抗敏生活的完整照護資訊。
-    </p>
-
-</div>
-
-<div class="aqi-section" id="當前空污">
-
-    <div class="aqi-card">
-
-        <div class="aqi-header">
-            😷 今日空氣品質指標 (AQI)
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">🍃 舒鼻指南</a>
+            <nav>
+                <ul>
+                    <li><a onclick="scrollToSection('當前空污')">即時空污</a></li>
+                    <li><a onclick="scrollToSection('百科')">過敏小百科</a></li>
+                    <li><a onclick="scrollToSection('指南')">抗敏生活指南</a></li>
+                    <li><a onclick="scrollToSection('飲食')">食物與營養</a></li>
+                    <li><a onclick="scrollToSection('資源')">出門準備資源</a></li>
+                    <li><a onclick="scrollToSection('檢測')">自我檢測工具</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="aqi-select-box">
-
-            <label
-                for="station-select"
-                style="
-                    font-size:0.9rem;
-                    color:var(--secondary);
-                "
-            >
-                選擇觀測測站：
-            </label>
-
-            <select
-                id="station-select"
-                class="aqi-select"
-                onchange="changeStation()"
-            >
-                <option>
-                    測站資料載入中...
-                </option>
-            </select>
-
-        </div>
-
-        <div class="aqi-display">
-
-            <div class="aqi-num-box">
-
-                <div
-                    id="aqi-value"
-                    class="aqi-value"
-                >
-                    --
-                </div>
-
-                <div class="aqi-label">
-                    AQI 指數
-                </div>
-
-            </div>
-
-            <div class="aqi-status-box">
-
-                <div
-                    id="aqi-status"
-                    class="aqi-status"
-                >
-                    連線中...
-                </div>
-
-                <div
-                    id="aqi-station-name"
-                    class="aqi-station"
-                >
-                    觀測站：--
-                </div>
-
-                <div
-                    id="aqi-time"
-                    class="aqi-time"
-                >
-                    更新時間：--
-                </div>
-
-            </div>
-
-        </div>
-
-        <div
-            id="allergy-risk-card"
-            class="risk-card"
-        >
-
-            <div class="risk-title">
-                🌿 今日過敏風險建議
-            </div>
-
-            <div id="risk-content">
-                資料分析中...
-            </div>
-
-        </div>
-
+    <div class="hero">
+        <h1>為暢快呼吸做準備</h1>
+        <p>提供科學、簡約、高密度的過敏性鼻炎日常照護提案，陪您舒適度過一整年。</p>
     </div>
 
-</div>
-
-<main>
-
-    <section id="百科">
-
-        <h2>
-            過敏小百科
-        </h2>
-
-        <div class="intro-text">
-
-            過敏性鼻炎常見原因包括：
-
-            <br /><br />
-
-            • 塵蟎
-            <br />
-            • 花粉
-            <br />
-            • 黴菌
-            <br />
-            • 寵物皮屑
-            <br />
-            • 空氣污染
-
+    <div class="aqi-section" id="當前空污">
+        <div class="aqi-card">
+            <div class="aqi-header">😷 今日空氣品質指標 (AQI) 即時連線</div>
+            <div class="aqi-select-box">
+                <label for="station-select" style="font-size:0.9rem; color:var(--secondary);">選擇觀測測站：</label>
+                <select id="station-select" class="aqi-select" onchange="changeStation()">
+                    <option value="載入中">測站資料載入中...</option>
+                </select>
+            </div>
+            <div class="aqi-display">
+                <div class="aqi-num-box">
+                    <div id="aqi-value" class="aqi-value">--</div>
+                    <div class="aqi-label">AQI 指數</div>
+                </div>
+                <div class="aqi-status-box">
+                    <div id="aqi-status" class="aqi-status">連線中...</div>
+                    <div id="aqi-station-name" class="aqi-station">觀測站：--</div>
+                    <div id="aqi-time" class="aqi-time">更新時間：--</div>
+                </div>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">※ 資料透過您個人的環境部 API 金鑰即時同步獲取。</p>
         </div>
+    </div>
 
-    </section>
+    <main>
+        <section id="百科">
+            <h2>一、 過敏小百科</h2>
+            <div class="intro-text">過敏性鼻炎主要可依發作期區分為兩大類，了解自己的病因才能精準防護：</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>對比項目</th>
+                        <th>季節性過敏性鼻炎</th>
+                        <th>常年性過敏性鼻炎</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>主要誘因</strong></td>
+                        <td>主要是由<strong>花粉</strong>、<strong>植物孢子</strong>等戶外環境因子引起。</td>
+                        <td>多由室內的<strong>塵蟎</strong>、<strong>黴菌</strong>、<strong>蟑螂</strong>、<strong>寵物皮屑</strong>、<strong>棉絮</strong>等引起。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>核心症狀</strong></td>
+                        <td>
+                            <ul class="highlight-list">
+                                <li>陣發性連續打噴嚏</li>
+                                <li>流出大量清水樣鼻涕</li>
+                                <li>常伴隨明顯的<strong>眼睛紅腫與奇癢</strong></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="highlight-list">
+                                <li>症狀持續存在，但通常較為輕微</li>
+                                <li>以間歇性鼻塞、清晨流鼻涕為主</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>發作時機</strong></td>
+                        <td>好發於<strong>特定的季節</strong>。</td>
+                        <td>沒有明顯的季節限制，發作時間橫跨<strong>一年四季</strong>。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-    <section id="指南">
+        <section id="指南">
+            <h2>二、 抗敏生活指南</h2>
+            <div class="intro-text">全面調整居家與辦公環境，透過簡單的日常習慣改變，打造阻絕過敏原的防護網。</div>
+            <div class="sub-grid">
+                <div class="guide-box">
+                    <h4>🧹 1. 減少環境過敏原</h4>
+                    <ul>
+                        <li><strong>認識敵人：</strong> 常見過敏原包括塵蟎、黴菌、寵物皮屑、花粉與蟑螂。</li>
+                        <li><strong>寢具清洗：</strong> 枕套與被套需<strong>每週清洗</strong>，水溫建議使用 <strong>55°C 至 60°C 的熱水</strong>，或是利用高溫烘乾機烘乾。</li>
+                        <li><strong>物理防蟎：</strong> 直接選用合格的「防蟎枕套與被套」包裹寢具。</li>
+                        <li><strong>環境精簡：</strong> 盡可能減少房內的絨毛玩偶與地毯；冷氣機濾網必須定期拆下清洗。</li>
+                    </ul>
+                </div>
+                <div class="guide-box">
+                    <h4>🌡️ 2. 控制溫度與濕度</h4>
+                    <ul>
+                        <li><strong>黃金濕度控制：</strong> 善用除濕機或加濕機，將室內的相對濕度嚴格控制在 <strong>40% 至 50% 之間</strong>，能有效阻斷塵蟎生長。</li>
+                        <li><strong>空氣循環：</strong> 天氣良好時保持室內空氣流通，避免環境過度悶熱、潮濕而滋生黴菌。</li>
+                    </ul>
+                </div>
+                <div class="guide-box">
+                    <h4>💨 3. 遠離空氣刺激物</h4>
+                    <ul>
+                        <li><strong>避開微粒刺激：</strong> 減少在室內燃燒線香、噴灑香水或使用高濃度精油。</li>
+                        <li><strong>廚房與空污：</strong> 料理時務必開啟抽油煙機減少油煙，並嚴格<strong>避免二手煙</strong>的危害。</li>
+                        <li><strong>科技輔助：</strong> 視空氣品質與環境需求，在日常活動區域配置空氣清淨機。</li>
+                    </ul>
+                </div>
+                <div class="guide-box">
+                    <h4>✨ 4. 改善正確清潔方式</h4>
+                    <ul>
+                        <li><strong>濕擦代替乾掃：</strong> 直接拿掃把掃地會引發大範圍的揚灰，強烈建議以<strong>濕抹布或濕拖把</strong>代替，將過敏原直接帶走。</li>
+                        <li><strong>自我防護：</strong> 大掃除或進行居家環境清潔時，<strong>一定要戴上口罩</strong>。</li>
+                        <li><strong>頻率原則：</strong> 環境應養成時常小幅清潔的習慣，<strong>切勿累積久了才大清一次</strong>。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-        <h2>
-            抗敏生活指南
-        </h2>
+        <section id="飲食">
+            <h2>三、 食療與營養建議</h2>
+            <div class="intro-text">飲食無法取代藥物，但正確的飲食方針能協助身體抗氧化、降低不必要的發炎反應。</div>
+            <div class="food-container">
+                <div class="food-card bad-card">
+                    <h4>⚠️ 應避開或減少的食物</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #851414;"><strong>● 已知食物過敏原（因人而異）：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">牛奶</span><span class="tag">雞蛋</span><span class="tag">花生</span>
+                        <span class="tag">堅果</span><span class="tag">海鮮</span><span class="tag">黃豆</span><span class="tag">小麥</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #851414;"><strong>● 減少刺激性飲食：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">酒精</span><span class="tag">辛辣食物</span><span class="tag">油炸食品</span>
+                        <span class="tag">含糖飲料</span><span class="tag">重口味加工品</span>
+                    </div>
+                </div>
+                <div class="food-card good-card">
+                    <h4>🥗 建議多攝取與維持的飲食</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #1e5335;"><strong>● 均衡飲食核心：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">豐富蔬菜水果</span><span class="tag">高纖食物</span>
+                        <span class="tag">足夠優質蛋白質</span><span class="tag">Omega-3（深海魚類）</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #1e5335;"><strong>● 身體微環境調節：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">維生素 C/E</span><span class="tag">特定機能益生菌</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="intro-text">
+        <section id="資源">
+            <h2>四、 今日出門準備資源</h2>
+            <div class="resource-grid">
+                <a href="https://airtw.moenv.gov.tw/" target="_blank" class="link-card"><span>😷 環境部空氣品質監測網</span><span>↗</span></a>
+                <a href="https://www.hpa.gov.tw/Home/Index.aspx" target="_blank" class="link-card"><span>🏥 衛生福利部國民健康署</span><span>↗</span></a>
+                <a href="https://www.cdc.gov.tw/" target="_blank" class="link-card"><span>🦠 衛生福利部疾病管制署</span><span>↗</span></a>
+                <a href="https://www.asthma-edu.org.tw/" target="_blank" class="link-card"><span>🫁 台灣氣喘衛教學會</span><span>↗</span></a>
+                <a href="https://www.taaaci.org.tw/" target="_blank" class="link-card"><span>🩺 台灣過敏氣喘暨臨床免疫醫學會</span><span>↗</span></a>
+            </div>
+        </section>
 
-            ✓ 每週清洗寢具
-            <br />
+        <section id="檢測">
+            <h2>五、 過敏 vs 感冒 10題深度自我檢測工具</h2>
+            <div class="intro-text">老是分不清是感冒還是過敏？請依照您最近一至兩週的身體現況，回答以下 10 個經典指標問題：</div>
+            
+            <div class="quiz-box">
+                <div class="quiz-counter">問題 <span id="current-q-num">1</span> / 10</div>
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="progress-fill"></div>
+                </div>
 
-            ✓ 使用防蟎寢具
-            <br />
+                <div class="question active" id="quiz-q1">
+                    <div class="q-title">1. 您的打噴嚏方式通常是哪一種？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(1, 'allergy')">一打就很劇烈，接連狂打 3~5 個以上才停</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(1, 'cold')">偶爾打個一兩下，沒有連續狂轟猛炸的現象</button>
+                </div>
 
-            ✓ 維持濕度 40~50%
-            <br />
+                <div class="question" id="quiz-q2">
+                    <div class="q-title">2. 觀察一下您流出來的鼻涕顏色與質地？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(2, 'allergy')">幾乎全是清澈、透明、像水一樣稀稀的鼻涕</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(2, 'cold')">比較黏稠，甚至呈現黃色、綠色或白色乳狀</button>
+                </div>
 
-            ✓ 定期清洗冷氣濾網
-            <br />
+                <div class="question" id="quiz-q3">
+                    <div class="q-title">3. 除了鼻子不舒服，您的臉部器官會經常感到發癢嗎？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(3, 'allergy')">眼睛奇癢無比、揉不停，連耳朵或上顎都常癢癢的</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(3, 'cold')">幾乎不會發癢，主要是喉嚨紅腫、吞嚥時有撕裂刺痛感</button>
+                </div>
 
-            ✓ 空污時配戴口罩
+                <div class="question" id="quiz-q4">
+                    <div class="q-title">4. 目前這些呼吸道不適的症狀，大概持續多久了？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(4, 'allergy')">時間拉得很長，已經反覆持續超過兩週、甚至一個月以上了</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(4, 'cold')">剛發作沒幾天（一週以內），通常一到兩週內就會慢慢痊癒</button>
+                </div>
 
-        </div>
+                <div class="question" id="quiz-q5">
+                    <div class="q-title">5. 症狀最容易在一天之中的哪一個時間點大爆發？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(5, 'allergy')">清晨剛下床一陣子、或是深夜躺下時特別嚴重，白天又稍微好轉</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(5, 'cold')">沒有固定的好發時間，不論早中晚，整天下來不適感都差不多</button>
+                </div>
 
-    </section>
+                <div class="question" id="quiz-q6">
+                    <div class="q-title">6. 您的身體是否有出現伴隨全身性的發炎或微燒反應？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(6, 'cold')">有發燒、畏寒、全身肌肉痠痛、骨頭酸軟或明顯疲憊頭痛</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(6, 'allergy')">完全沒有發燒或肌肉痠痛，精神大致良好，純粹鼻子或眼睛難受</button>
+                </div>
 
-</main>
+                <div class="question" id="quiz-q7">
+                    <div class="q-title">7. 當週遭環境發生以下變化時，症狀會突然惡化嗎？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(7, 'allergy')">進出冷氣房（溫差大）、翻動舊衣物地毯、或空氣品質變差時瞬間發作</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(7, 'cold')">主要是受身邊感冒的家人/同事傳染，跟溫差或灰塵沒有立刻關聯</button>
+                </div>
 
-<footer>
+                <div class="question" id="quiz-q8">
+                    <div class="q-title">8. 是否有伴隨咳嗽？您的咳嗽通常是？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(8, 'cold')">常伴隨較深的咳嗽，咳出濃痰，喉嚨深處發炎感明顯</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(8, 'allergy')">大多不咳，或是因為鼻涕倒流引發喉嚨癢，而產生的乾咳</button>
+                </div>
 
-    <p>
-        © 2026 過敏小百科
-    </p>
+                <div class="question" id="quiz-q9">
+                    <div class="q-title">9. 過去每逢換季，您有類似的「老毛病」反覆發生嗎？</div>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(9, 'allergy')">有的，每年一到特定季節（如秋冬交替或春天）就會上演同樣劇本</button>
+                    <button class="quiz-btn" onclick="nextQuizQuestion(9, 'cold')">沒有，通常是一年之中不定期感冒幾次，每次好完就沒事了</button>
+                </div>
 
-    <br />
+                <div class="question" id="quiz-q10">
+                    <div class="q-title">10. 嘗試服用一般的感冒藥（如止痛解熱劑）後，效果如何？</div>
+                    <button class="quiz-btn" onclick="showQuizResult('cold')">吃了感冒藥後，喉嚨痛和身體痠痛有明顯改善</button>
+                    <button class="quiz-btn" onclick="showQuizResult('allergy')">吃一般感冒藥效果有限，往往需要抗組織胺或貼避過敏原才有效</button>
+                </div>
 
-    <p>
-        資料來源：
-        環境部、國民健康署、台灣氣喘衛教學會
-    </p>
+                <div id="quiz-result">
+                    <div id="quiz-result-html"></div>
+                    <button class="restart-btn" onclick="restartQuiz()">重新進行檢測</button>
+                    <div class="quiz-disclaimer">※ 免責聲明：本線上10題深度檢測僅供日常健康管理參考，結果無法替代專業醫師的臨床診斷。若症狀持續或伴隨高燒，請務必尋求醫療協助。</div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-</footer>
+    <footer>
+        <p>© 2026 舒鼻指南. 本站衛教資訊僅供日常照護參考。身體若有持續不適，請務必尋求專業醫師診斷與治療。</p>
+    </footer>
 
-<script>
-
-    function scrollToSection(id) {
-
-        const element =
-            document.getElementById(id);
-
-        if (element) {
-
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-        }
-    }
-
-    // ===== AQI =====
-
-    let globalAqiData = [];
-
-    // 你的 Cloudflare Worker 網址
-    const apiUrl =
-        'https://YOUR-WORKER.workers.dev';
-
-    async function fetchAQIData() {
-
-        try {
-
-            const response =
-                await fetch(apiUrl);
-
-            if (!response.ok) {
-                throw new Error('API error');
+    <script>
+        // 平滑捲動
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const offset = 80; 
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = element.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
-
-            const resData =
-                await response.json();
-
-            if (
-                resData &&
-                resData.records
-            ) {
-
-                globalAqiData =
-                    resData.records;
-
-                initStationSelect();
-
-            }
-
-        } catch (error) {
-
-            console.error(error);
-
-            document.getElementById(
-                'aqi-status'
-            ).innerText =
-                'AQI 載入失敗';
-
         }
 
-    }
+        // 10題問卷計分功能
+        let quizScores = { allergy: 0, cold: 0 };
+        const totalQuestions = 10;
 
-    function initStationSelect() {
+        function nextQuizQuestion(currentNum, type) {
+            quizScores[type]++;
+            
+            // 隱藏目前題目，顯示下一題
+            document.getElementById(`quiz-q${currentNum}`).classList.remove('active');
+            document.getElementById(`quiz-q${currentNum + 1}`).classList.add('active');
+            
+            // 更新進度條與題號
+            const nextNum = currentNum + 1;
+            document.getElementById('current-q-num').innerText = nextNum;
+            document.getElementById('progress-fill').style.width = `${(nextNum / totalQuestions) * 100}%`;
+        }
 
-        const selectEl =
-            document.getElementById(
-                'station-select'
-            );
+        function showQuizResult(lastType) {
+            quizScores[lastType]++;
+            document.getElementById('quiz-q10').classList.remove('active');
+            
+            const resultDiv = document.getElementById('quiz-result');
+            const htmlDiv = document.getElementById('quiz-result-html');
+            resultDiv.style.display = 'block';
+            
+            // 進度條滿格
+            document.getElementById('progress-fill').style.width = '100%';
 
-        selectEl.innerHTML = '';
+            // 計算兩者得分比例
+            const totalAnswered = quizScores.allergy + quizScores.cold;
+            const allergyPercent = Math.round((quizScores.allergy / totalAnswered) * 100);
+            const coldPercent = Math.round((quizScores.cold / totalAnswered) * 100);
+            
+            if (quizScores.allergy > quizScores.cold) {
+                htmlDiv.innerHTML = `
+                    <div class="result-title res-allergy">🎯 綜合評估：高度傾向「過敏性鼻炎」</div>
+                    <p style="margin-bottom:10px;"><strong>指標分析：過敏特徵 ${allergyPercent}% ｜ 感冒特徵 ${coldPercent}%</strong></p>
+                    <p style="max-width:650px; margin:0 auto; color:#495057; font-size:0.95rem;">您的生活狀態（如換季反覆發作、溫差敏感、連續狂打噴嚏、眼癢且無全身發燒）非常符合典型的呼吸道過敏表現。建議積極參照本站第二部分的環境抗敏生活指南進行除蟎、控濕，必要時可至醫療院所安排過敏原檢測。</p>
+                `;
+            } else if (quizScores.cold > quizScores.allergy) {
+                htmlDiv.innerHTML = `
+                    <div class="result-title res-cold">🎯 綜合評估：高度傾向「一般病毒性感冒」</div>
+                    <p style="margin-bottom:10px;"><strong>指標分析：感冒特徵 ${coldPercent}% ｜ 過敏特徵 ${allergyPercent}%</strong></p>
+                    <p style="max-width:650px; margin:0 auto; color:#495057; font-size:0.95rem;">您的不適（伴隨全身發炎或微燒反應、喉嚨痛、深層咳嗽有濃痰且屬於短期急性發作）比較具有病毒性感冒的特徵。請多喝溫開水、注意防風保暖、並維持充足睡眠，一般病程約 7~10 天會自行緩解，若持續高燒請盡快就醫。</p>
+                `;
+            } else {
+                htmlDiv.innerHTML = `
+                    <div class="result-title" style="color:var(--secondary)">🎯 綜合評估：感冒與過敏特徵「各半/並存」</div>
+                    <p style="margin-bottom:10px;"><strong>指標分析：過敏特徵 50% ｜ 感冒特徵 50%</strong></p>
+                    <p style="max-width:650px; margin:0 auto; color:#495057; font-size:0.95rem;">您的數據落入光譜正中央！這種情況很常見，有可能是「本身有過敏體質的您，此時正好又受到了病毒性感冒的傳染」，導致症狀交織在一起。建議優先當作感冒多休息看診，等急性期過後再配合抗敏生活調整。</p>
+                `;
+            }
+        }
 
-        globalAqiData.forEach(
-            (record, index) => {
+        function restartQuiz() {
+            quizScores = { allergy: 0, cold: 0 };
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('current-q-num').innerText = '1';
+            document.getElementById('progress-fill').style.width = '10%';
+            document.getElementById('quiz-q1').classList.add('active');
+        }
 
-                const option =
-                    document.createElement(
-                        'option'
-                    );
+        // ==========================================
+        // 🔮 環境部實時空氣品質指標 (AQI) API 串接代碼
+        // ==========================================
+        
+        // ⚠️ 請在下方單引號內，貼上您申請到的環境部 API Key 金鑰
+        const API_KEY = 'YOUR_API_KEY_HERE'; 
+        
+        let globalAqiData = []; 
 
+        async function fetchAQIData() {
+            const proxyUrl = 'https://corsproxy.io/?';
+            const apiUrl = `https://data.moenv.gov.tw/api/v2/aqx_p_432?api_key=${API_KEY}&limit=100&sort=ImportDate%20desc&format=JSON`;
+            
+            try {
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                if (!response.ok) throw new Error('API 連線失敗');
+                const resData = await response.json();
+                if(resData && resData.records) {
+                    globalAqiData = resData.records;
+                    initStationSelect();
+                } else {
+                    document.getElementById('aqi-status').innerText = '金鑰無效或無資料';
+                }
+            } catch (error) {
+                console.error('API Error:', error);
+                document.getElementById('aqi-status').innerText = '資料獲取失敗，請確認Key是否正確';
+            }
+        }
+
+        function initStationSelect() {
+            const selectEl = document.getElementById('station-select');
+            selectEl.innerHTML = ''; 
+            globalAqiData.sort((a, b) => a.county.localeCompare(b.county, 'zh-Hant'));
+            globalAqiData.forEach((record, index) => {
+                const option = document.createElement('option');
                 option.value = index;
-
-                option.text =
-                    `[${record.county}] ${record.sitename}`;
-
+                option.text = `[${record.county}] ${record.sitename}`;
                 selectEl.appendChild(option);
+            });
+            renderAQI(0);
+        }
 
+        function changeStation() {
+            const index = document.getElementById('station-select').value;
+            renderAQI(index);
+        }
+
+        function renderAQI(index) {
+            const data = globalAqiData[index];
+            if(!data) return;
+
+            const aqiValue = parseInt(data.aqi) || 0;
+            const valueEl = document.getElementById('aqi-value');
+            const statusEl = document.getElementById('aqi-status');
+            
+            valueEl.innerText = data.aqi || '無資料';
+            document.getElementById('aqi-station-name').innerText = `觀測站：${data.county} - ${data.sitename}`;
+            document.getElementById('aqi-time').innerText = `更新時間：${data.publishtime}`;
+
+            if (aqiValue <= 50) {
+                statusEl.innerText = '🟢 空氣良好 (非常舒暢)';
+                valueEl.style.color = '#2a9d8f';
+                statusEl.style.color = '#2a9d8f';
+            } else if (aqiValue <= 100) {
+                statusEl.innerText = '🟡 空氣普通 (過敏體質需留意)';
+                valueEl.style.color = '#e9c46a';
+                statusEl.style.color = '#b79535';
+            } else if (aqiValue <= 150) {
+                statusEl.innerText = '🟠 對敏感族群不健康 (建議戴口罩)';
+                valueEl.style.color = '#f4a261';
+                statusEl.style.color = '#e76f51';
+            } else {
+                statusEl.innerText = '🔴 空氣極度不健康 (減少非必要戶外活動)';
+                valueEl.style.color = '#e63946';
+                statusEl.style.color = '#e63946';
             }
-        );
-
-        const defaultIndex =
-            globalAqiData.findIndex(
-                item =>
-                    item.county.includes(
-                        '彰化'
-                    )
-            );
-
-        renderAQI(
-            defaultIndex !== -1
-                ? defaultIndex
-                : 0
-        );
-
-    }
-
-    function changeStation() {
-
-        const index =
-            document.getElementById(
-                'station-select'
-            ).value;
-
-        renderAQI(index);
-
-    }
-
-    function renderAQI(index) {
-
-        const data =
-            globalAqiData[index];
-
-        if (!data) return;
-
-        const aqiValue =
-            parseInt(data.aqi) || 0;
-
-        const valueEl =
-            document.getElementById(
-                'aqi-value'
-            );
-
-        const statusEl =
-            document.getElementById(
-                'aqi-status'
-            );
-
-        valueEl.innerText =
-            data.aqi || '無資料';
-
-        document.getElementById(
-            'aqi-station-name'
-        ).innerText =
-            `觀測站：${data.county} - ${data.sitename}`;
-
-        document.getElementById(
-            'aqi-time'
-        ).innerText =
-            `更新時間：${data.publishtime}`;
-
-        if (aqiValue <= 50) {
-
-            statusEl.innerText =
-                '🟢 空氣良好';
-
-            valueEl.style.color =
-                '#2a9d8f';
-
-            statusEl.style.color =
-                '#2a9d8f';
-
-        } else if (aqiValue <= 100) {
-
-            statusEl.innerText =
-                '🟡 空氣普通';
-
-            valueEl.style.color =
-                '#e9c46a';
-
-            statusEl.style.color =
-                '#b79535';
-
-        } else if (aqiValue <= 150) {
-
-            statusEl.innerText =
-                '🟠 敏感族群不健康';
-
-            valueEl.style.color =
-                '#f4a261';
-
-            statusEl.style.color =
-                '#e76f51';
-
-        } else {
-
-            statusEl.innerText =
-                '🔴 空氣不健康';
-
-            valueEl.style.color =
-                '#e63946';
-
-            statusEl.style.color =
-                '#e63946';
         }
 
-        renderRiskSuggestion(aqiValue);
-
-    }
-
-    function renderRiskSuggestion(aqi) {
-
-        const riskEl =
-            document.getElementById(
-                'risk-content'
-            );
-
-        let html = '';
-
-        if (aqi <= 50) {
-
-            html = `
-                ✅ 空氣品質良好<br>
-                ✓ 適合一般戶外活動<br>
-                ✓ 可正常開窗通風
-            `;
-
-        } else if (aqi <= 100) {
-
-            html = `
-                😷 敏感族群需留意<br>
-                ✓ 建議配戴口罩<br>
-                ✓ 回家後洗臉清鼻腔
-            `;
-
-        } else if (aqi <= 150) {
-
-            html = `
-                ⚠️ 過敏風險升高<br>
-                ✓ 減少長時間戶外活動<br>
-                ✓ 開啟空氣清淨機
-            `;
-
+        // 網頁開啟自動執行
+        if(API_KEY !== 'YOUR_API_KEY_HERE') {
+            fetchAQIData();
         } else {
-
-            html = `
-                🚨 空氣品質不健康<br>
-                ✓ 建議減少外出<br>
-                ✓ 關閉窗戶<br>
-                ✓ 持續配戴口罩
-            `;
+            document.getElementById('aqi-status').innerText = '請先在程式碼下方填入真實的 API Key';
         }
-
-        riskEl.innerHTML = html;
-
-    }
-
-    fetchAQIData();
-
-</script>
-
+    </script>
 </body>
 </html>
