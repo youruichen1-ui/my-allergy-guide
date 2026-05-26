@@ -1,1 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舒鼻指南 | 您的全方位過敏照護站</title>
+    <style>
+        /* 全域極簡風格設計 */
+        :root {
+            --primary: #3a5a40; /* 深森林綠 */
+            --primary-light: #edf2ee; /* 淺綠背景 */
+            --secondary: #4a5759; /* 霧霾藍灰 */
+            --bg-light: #fdfdfd; /* 純淨極簡白 */
+            --card-bg: #ffffff;
+            --text-dark: #2c3531; /* 柔和深黑 */
+            --text-muted: #6c757d;
+            --accent-green: #2a9d8f;
+            --accent-red: #e63946;
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            background-color: #fafafa;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* 頂部固定導覽列 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 1px 10px rgba(0,0,0,0.02);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        nav ul { display: flex; list-style: none; gap: 24px; }
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        nav a:hover { color: var(--primary); }
+
+        /* 首頁大圖視覺區（Hero Section） */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            background: linear-gradient(180deg, #f4f6f4 0%, #fafafa 100%);
+        }
+        .hero h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; font-weight: 700; }
+        .hero p { color: var(--secondary); font-size: 1.05rem; max-width: 650px; margin: 0 auto; }
+
+        /* 主內容容器 */
+        main {
+            max-width: 960px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        /* 區塊通用樣式 */
+        section {
+            background: var(--card-bg);
+            padding: 45px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.01);
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #eaeaea;
+            margin-left: 15px;
+        }
+        h3 { color: var(--primary); margin: 25px 0 12px; font-size: 1.2rem; }
+
+        /* 第一部分：百科對比表格與卡片 */
+        .intro-text { color: var(--secondary); margin-bottom: 20px; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #eaeaea;
+            padding: 16px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .comparison-table th { background-color: var(--primary-light); color: var(--primary); font-weight: 600; width: 20%; }
+        .comparison-table td { width: 40%; }
+        .highlight-list { padding-left: 18px; }
+        .highlight-list li { margin-bottom: 6px; }
+
+        /* 第二部分：指南區塊 */
+        .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .guide-box {
+            background: #fafbfb;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .guide-box:hover { transform: translateY(-2px); border-color: #e0e0e0; }
+        .guide-box h4 { color: var(--secondary); margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+        .guide-box ul { padding-left: 20px; color: #495057; font-size: 0.95rem; }
+        .guide-box li { margin-bottom: 8px; }
+        .alert-text { color: #d946ef; font-weight: bold; }
+
+        /* 第三部分：食物色彩標籤 */
+        .food-container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
+        .food-card { padding: 30px; border-radius: 12px; }
+        .food-card h4 { font-size: 1.1rem; margin-bottom: 15px; }
+        .good-card { background-color: #f2f9f5; border: 1px solid #d8ebd9; }
+        .good-card h4 { color: var(--accent-green); }
+        .bad-card { background-color: #fff5f5; border: 1px solid #fcdede; }
+        .bad-card h4 { color: var(--accent-red); }
+        
+        .tag-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .tag {
+            padding: 5px 12px;
+            background: #fff;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .food-note { font-size: 0.88rem; color: var(--secondary); border-top: 1px dashed rgba(0,0,0,0.08); padding-top: 12px; }
+
+        /* 第四部分：外部資源按鈕 */
+        .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            background-color: #fff;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .link-card:hover {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        .link-icon { font-size: 1.1rem; color: var(--secondary); }
+
+        /* 頁尾免責聲明 */
+        footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 40px 0; background: #fff; border-top: 1px solid #eee; }
+
+        /* RWD 行動裝置優化排版 */
+        @media (max-width: 800px) {
+            nav ul { display: none; } /* 手機版隱藏導覽維持極簡 */
+            section { padding: 25px 20px; }
+            .sub-grid, .food-container, .resource-grid { grid-template-columns: 1fr; }
+            .comparison-table { display: block; overflow-x: auto; font-size: 0.9rem; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">🍃 舒鼻指南</a>
+            <nav>
+                <ul>
+                    <li><a onclick="scrollToSection('百科')">過敏小百科</a></li>
+                    <li><a onclick="scrollToSection('指南')">抗敏生活指南</a></li>
+                    <li><a onclick="scrollToSection('飲食')">食物與營養</a></li>
+                    <li><a onclick="scrollToSection('資源')">出門準備資源</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 首頁大圖區 -->
+    <div class="hero">
+        <h1>為暢快呼吸做準備</h1>
+        <p>提供科學、簡約、高密度的過敏性鼻炎日常照護提案，陪您舒適度過一整年。</p>
+    </div>
+
+    <!-- 主要內容區 -->
+    <main>
+
+        <!-- 第一部分：過敏小百科 -->
+        <section id="百科">
+            <h2>一、 過敏小百科</h2>
+            <div class="intro-text">過敏性鼻炎主要可依發作期區分為兩大類，了解自己的病因才能精準防護：</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>對比項目</th>
+                        <th>季節性過敏性鼻炎</th>
+                        <th>常年性過敏性鼻炎</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>主要誘因</strong></td>
+                        <td>主要是由<strong>花粉</strong>、<strong>植物孢子</strong>等戶外環境因子引起。</td>
+                        <td>多由室內的<strong>塵蟎</strong>、<strong>黴菌</strong>、<strong>蟑螂</strong>、<strong>寵物皮屑</strong>、<strong>棉絮</strong>等引起。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>核心症狀</strong></td>
+                        <td>
+                            <ul class="highlight-list">
+                                <li>陣發性連續打噴嚏</li>
+                                <li>流出大量清水樣鼻涕</li>
+                                <li>常伴隨明顯的<strong>眼睛紅腫與奇癢</strong></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="highlight-list">
+                                <li>症狀持續存在，但通常較為輕微</li>
+                                <li>以間歇性鼻塞、清晨流鼻涕為主</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>發作時機</strong></td>
+                        <td>好發於<strong>特定的季節</strong>（例如春季花粉期、秋季乾燥期或特定植物開花期）。</td>
+                        <td>沒有明顯的季節限制，症狀如影隨形，發作時間橫跨<strong>一年四季</strong>。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 第二部分：抗敏生活指南 -->
+        <section id="指南">
+            <h2>二、 抗敏生活指南</h2>
+            <div class="intro-text">全面調整居家與辦公環境，透過簡單的日常習慣改變，打造阻絕過敏原的防護網。</div>
+            
+            <div class="sub-grid">
+                <!-- 1. 減少過敏原 -->
+                <div class="guide-box">
+                    <h4>🧹 1. 減少環境過敏原</h4>
+                    <ul>
+                        <li><strong>認識敵人：</strong> 常見過敏原包括塵蟎、黴菌、寵物皮屑、花粉與蟑螂。</li>
+                        <li><strong>寢具清洗：</strong> 枕套與被套需<strong>每週清洗</strong>，水溫建議使用 <strong>55°C 至 60°C 的熱水</strong>，或是利用高溫烘乾機烘乾。</li>
+                        <li><strong>物理防蟎：</strong> 直接選用合格的「防蟎枕套與被套」包裹寢具。</li>
+                        <li><strong>環境精簡：</strong> 盡可能減少房內的絨毛玩偶與地毯；冷氣機濾網必須定期拆下清洗。</li>
+                    </ul>
+                </div>
+
+                <!-- 2. 控制溫濕度 -->
+                <div class="guide-box">
+                    <h4>🌡️ 2. 控制溫度與濕度</h4>
+                    <ul>
+                        <li><strong>黃金濕度控制：</strong> 善用除濕機或加濕機，將室內的相對濕度嚴格控制在 <strong>40% 至 50% 之間</strong>，能有效阻斷塵蟎生長。</li>
+                        <li><strong>空氣循環：</strong> 天氣良好時保持室內空氣流通，避免環境過度悶熱、潮濕而滋生黴菌。</li>
+                    </ul>
+                </div>
+
+                <!-- 3. 減少空氣刺激物 -->
+                <div class="guide-box">
+                    <h4>💨 3. 遠離空氣刺激物</h4>
+                    <ul>
+                        <li><strong>避開微粒刺激：</strong> 減少在室內燃燒線香、噴灑香水或使用高濃度精油。</li>
+                        <li><strong>廚房與空污：</strong> 料理時務必開啟抽油煙機減少油煙，並嚴格<strong>避免二手煙</strong>的危害。</li>
+                        <li><strong>科技輔助：</strong> 視空氣品質與環境需求，在日常活動區域配置空氣清淨機。</li>
+                    </ul>
+                </div>
+
+                <!-- 4. 改善清潔方式 -->
+                <div class="guide-box">
+                    <h4>✨ 4. 改善正確清潔方式</h4>
+                    <ul>
+                        <li><strong>濕擦代替乾掃：</strong> 直接拿掃把掃地會引發大範圍的揚灰（粉塵飛揚），強烈建議以<strong>濕抹布或濕拖把</strong>代替，將過敏原直接帶走。</li>
+                        <li><strong>自我防護：</strong> 大掃除或進行居家環境清潔時，<strong>一定要戴上口罩</strong>。</li>
+                        <li><strong>頻率原則：</strong> 環境應養成時常小幅清潔的習慣，<strong>切勿累積久了才大清一次</strong>，以免瞬間吸入大量堆積的塵蟎。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三部分：食物建議 -->
+        <section id="飲食">
+            <h2>三、 食療與營養建議</h2>
+            <div class="intro-text">飲食無法取代藥物，但正確的飲食方針能協助身體抗氧化、降低不必要的發炎反應。</div>
+            
+            <div class="food-container">
+                <!-- 避開易致敏與刺激性食物 -->
+                <div class="food-card bad-card">
+                    <h4>⚠️ 應避開或減少的食物</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #851414;"><strong>● 已知食物過敏原（因人而異）：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">牛奶</span><span class="tag">雞蛋</span><span class="tag">花生</span>
+                        <span class="tag">堅果</span><span class="tag">海鮮</span><span class="tag">黃豆</span><span class="tag">小麥</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #851414;"><strong>● 減少刺激性飲食：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">酒精</span><span class="tag">辛辣食物</span><span class="tag">油炸食品</span>
+                        <span class="tag">含糖飲料</span><span class="tag">重口味加工品</span>
+                    </div>
+                    <div class="food-note">
+                        ※ 冰冷飲品容易觸發神經反射引發大量鼻涕，過敏期間宜盡量避免。
+                    </div>
+                </div>
+
+                <!-- 維持均衡飲食 -->
+                <div class="food-card good-card">
+                    <h4>🥗 建議多攝取與維持的飲食</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #1e5335;"><strong>● 均衡飲食核心：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">豐富蔬菜水果</span><span class="tag">高纖食物</span>
+                        <span class="tag">足夠優質蛋白質</span><span class="tag">Omega-3（深海魚類）</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px; color: #1e5335;"><strong>● 身體微環境調節：</strong></p>
+                    <div class="tag-group">
+                        <span class="tag">維生素 C/E</span><span class="tag">特定機能益生菌</span>
+                    </div>
+                    <div class="food-note">
+                        <strong>穩定生活作息：</strong>除了挑選對的食物，保持充足的睡眠與規律的有氧運動，是調節免疫系統不二法門。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四部分：外部資源 -->
+        <section id="資源">
+            <h2>四、 今日出門準備資源</h2>
+            <div class="intro-text">出門前參考官方與具公信力醫學學會的即時數據及衛教資訊，提早做好口罩、穿著或用藥準備：</div>
+            
+            <div class="resource-grid">
+                <a href="https://airtw.moenv.gov.tw/" target="_blank" class="link-card">
+                    <span>😷 環境部空氣品質監測網 (看今日空污)</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.hpa.gov.tw/Home/Index.aspx" target="_blank" class="link-card">
+                    <span>🏥 衛生福利部國民健康署</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.cdc.gov.tw/" target="_blank" class="link-card">
+                    <span>🦠 衛生福利部疾病管制署</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.asthma-edu.org.tw/" target="_blank" class="link-card">
+                    <span>🫁 台灣氣喘衛教學會</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.taaaci.org.tw/" target="_blank" class="link-card">
+                    <span>🩺 台灣過敏氣喘暨臨床免疫醫學會</span>
+                    <span class="link-icon">↗</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>© 2026 舒鼻指南. 本站衛教資訊僅供日常照護參考。身體若有持續不適，請務必尋求專業醫師診斷與治療。</p>
+    </footer>
+
+    <!-- 平滑捲動 JS 代碼 -->
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const offset = 80; 
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = element.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>
