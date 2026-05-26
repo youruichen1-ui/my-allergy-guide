@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>舒鼻指南 | 您的全方位過敏照護站</title>
+    <title>過敏小百科 | 您的全方位過敏照護站</title>
     <style>
         /* 全域極簡風格設計 */
         :root {
@@ -157,7 +157,7 @@
 
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">🍃 舒鼻指南</a>
+            <a href="#" class="logo">🍃 過敏小百科</a>
             <nav>
                 <ul>
                     <li><a onclick="scrollToSection('當前空污')">即時空污</a></li>
@@ -196,7 +196,7 @@
                     <div id="aqi-time" class="aqi-time">更新時間：--</div>
                 </div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">※ 資料透過您個人的環境部 API 金鑰即時同步獲取。</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">※ 資料透過環境部開放資料 API 即時同步獲取。</p>
         </div>
     </div>
 
@@ -268,7 +268,7 @@
                     <ul>
                         <li><strong>避開微粒刺激：</strong> 減少在室內燃燒線香、噴灑香水或使用高濃度精油。</li>
                         <li><strong>廚房與空污：</strong> 料理時務必開啟抽油煙機減少油煙，並嚴格<strong>避免二手煙</strong>的危害。</li>
-                        <li><strong>科技輔助：</strong> 視空氣品質與環境需求，在日常活動區域配置空氣清淨機。</li>
+                        <li><strong>科技輔助：</strong> 視空氣品質與環境需求，在日常活動區域配置空氣清淨機.</li>
                     </ul>
                 </div>
                 <div class="guide-box">
@@ -328,7 +328,7 @@
         <section id="檢測">
             <h2>五、 過敏 vs 感冒 10題深度自我檢測工具</h2>
             <div class="intro-text">老是分不清是感冒還是過敏？請依照您最近一至兩週的身體現況，回答以下 10 個經典指標問題：</div>
-            
+             
             <div class="quiz-box">
                 <div class="quiz-counter">問題 <span id="current-q-num">1</span> / 10</div>
                 <div class="quiz-progress-bar">
@@ -405,7 +405,7 @@
     </main>
 
     <footer>
-        <p>© 2026 舒鼻指南. 本站衛教資訊僅供日常照護參考。身體若有持續不適，請務必尋求專業醫師診斷與治療。</p>
+        <p>© 2026 過敏小百科. 本站衛教資訊僅供日常照護參考。身體若有持續不適，請務必尋求專業醫師診斷與治療。</p>
     </footer>
 
     <script>
@@ -488,9 +488,8 @@
         // 🔮 環境部實時空氣品質指標 (AQI) API 串接代碼
         // ==========================================
         
-        // ⚠️ 請在下方單引號內，貼上您申請到的環境部 API Key 金鑰
-        const API_KEY = 'YOUR_API_KEY_HERE'; 
-        
+        // 已直接填入您的專屬金鑰
+        const API_KEY = '65422f95-033f-4f69-acfd-23bb618200ee'; 
         let globalAqiData = []; 
 
         async function fetchAQIData() {
@@ -498,7 +497,8 @@
             const apiUrl = `https://data.moenv.gov.tw/api/v2/aqx_p_432?api_key=${API_KEY}&limit=100&sort=ImportDate%20desc&format=JSON`;
             
             try {
-                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                // 使用 corsproxy.io 解決前端直接呼叫政府開放資料會遇到的跨網域 (CORS) 阻擋問題
+                const response = await fetch(proxyUrl + apiUrl);
                 if (!response.ok) throw new Error('API 連線失敗');
                 const resData = await response.json();
                 if(resData && resData.records) {
@@ -509,7 +509,7 @@
                 }
             } catch (error) {
                 console.error('API Error:', error);
-                document.getElementById('aqi-status').innerText = '資料獲取失敗，請確認Key是否正確';
+                document.getElementById('aqi-status').innerText = '資料獲取失敗，請稍後再試';
             }
         }
 
@@ -562,12 +562,8 @@
             }
         }
 
-        // 網頁開啟自動執行
-        if(API_KEY !== 'YOUR_API_KEY_HERE') {
-            fetchAQIData();
-        } else {
-            document.getElementById('aqi-status').innerText = '請先在程式碼下方填入真實的 API Key';
-        }
+        // 網頁開啟時自動載入最新空氣品質資料
+        fetchAQIData();
     </script>
 </body>
 </html>
